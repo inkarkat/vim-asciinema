@@ -26,6 +26,13 @@ function! ft#asciinema#CreateRelativeRecord( timeDelta, absoluteTime, payload ) 
     return printf('[+%s,%11s,%s]', s:RenderTime(a:timeDelta, ' '), s:RenderTime(a:absoluteTime, ' '), a:payload)
 endfunction
 
+function! s:ParseRecord( lnum ) abort
+    return matchlist(getline(a:lnum), '^\[\(\d\+\%(\.\d*\)\?\)\(\s*,\)\(.*\)\]$')
+endfunction
+function! ft#asciinema#ParseRelativizedRecord( lnum ) abort
+    return matchlist(getline(a:lnum), '^\[\s*+\(\d\+\%(\.\d*\)\?\)\s*,\s*\(\d\+\%(\.\d*\)\?\)\s*,\(.*\)\]$')
+endfunction
+
 function! ft#asciinema#Relativize() abort
     if ! s:IsModifiable()
 	return
@@ -33,7 +40,7 @@ function! ft#asciinema#Relativize() abort
 
     let l:prevTime = 0.0
     for l:lnum in range(1, line('$'))
-	let l:parse = matchlist(getline(l:lnum), '^\[\(\d\+\%(\.\d*\)\?\)\(\s*,\)\(.*\)\]$')
+	let l:parse = s:ParseRecord(l:lnum)
 	if empty(l:parse)
 	    continue
 	endif
@@ -55,9 +62,9 @@ function! ft#asciinema#Unrelativize() abort
 
     let l:prevTime = 0.0
     for l:lnum in range(1, line('$'))
-	let l:parse = matchlist(getline(l:lnum), '^\[\s*+\(\d\+\%(\.\d*\)\?\)\s*,\s*\(\d\+\%(\.\d*\)\?\)\s*,\(.*\)\]$')
+	let l:parse = ft#asciinema#ParseRelativizedRecord(l:lnum)
 	if empty(l:parse)
-	    let l:parse = matchlist(getline(l:lnum), '^\[\(\d\+\%(\.\d*\)\?\)\(\s*,\)\(.*\)\]$')
+	    let l:parse = s:ParseRecord(l:lnum)
 	    if empty(l:parse)
 		continue
 	    endif
