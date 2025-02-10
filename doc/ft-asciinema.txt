@@ -67,6 +67,13 @@ USAGE							     *asciinema-usage*
 			Insert both a marker and comment at the recording's
 			current cursor position, to provide commentary on
 			what's about to happen and allow to navigate to it.
+					*:AsciinemaExtendTimedCommentAtCursor*
+:AsciinemaExtendTimedCommentAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position, and clear it again after
+			|g:asciinema_TimedCommentDuration|. Following records
+			are kept untouched, so this increases the overall
+			duration of the recording.
 					*:AsciinemaInsertTimedCommentAtCursor*
 :AsciinemaInsertTimedCommentAtCursor {comment}
 			Insert a comment at the recording's current cursor
@@ -75,10 +82,19 @@ USAGE							     *asciinema-usage*
 			|g:asciinema_TimedCommentMaxDuration|). The delay
 			between the current and the following record is
 			reduced accordingly.
-					*:AsciinemaExtendTimedCommentAtCursor*
-:AsciinemaExtendTimedCommentAtCursor {comment}
-			Insert a comment at the recording's current cursor
-			position, and clear it again after
+					   *:AsciinemaInsertCommentAtPosition*
+:[{row}[,{col}]]AsciinemaInsertCommentAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given. It will appear after the current
+			record and does not permanently change the cursor
+			position, so any following records will continue as if
+			it weren't there.
+				      *:AsciinemaExtendTimedCommentAtPosition*
+:[{row}[,{col}]]AsciinemaExtendTimedCommentAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given, and clear it again after
 			|g:asciinema_TimedCommentDuration|. Following records
 			are kept untouched, so this increases the overall
 			duration of the recording.
@@ -122,8 +138,11 @@ Minimum duration in seconds to the next record that
 |:AsciinemaInsertTimedCommentAtCursor| accepts, so that the comment is
 actually readable. Use |:AsciinemaExtendTimedCommentAtCursor| if the next
 record follows too quickly.
-
-
+			*g:asciinema_DefaultPosition*
+The default row, col for the |:AsciinemaInsertCommentAtPosition| commands; the
+default is the terminal's upper left corner: >
+    let g:asciinema_DefaultPosition = [1, 1]
+<
 ==============================================================================
 LIMITATIONS					       *asciinema-limitations*
 

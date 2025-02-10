@@ -26,12 +26,18 @@ endif
 if ! exists('g:asciinema_TimedCommentMinDuration')
     let g:asciinema_TimedCommentMinDuration = 0.9
 endif
+if ! exists('g:asciinema_DefaultPosition')
+    let g:asciinema_DefaultPosition = [1, 1]
+endif
 
 if ! exists('g:asciinema_SaveCursorPosition')
     let g:asciinema_SaveCursorPosition = "\e[s"
 endif
 if ! exists('g:asciinema_RestoreCursorPosition')
     let g:asciinema_RestoreCursorPosition = "\e[u"
+endif
+if ! exists('g:asciinema_SetCursorPosition')
+    let g:asciinema_SetCursorPosition = "\e[%d;%dH"
 endif
 
 
@@ -44,10 +50,15 @@ command! -buffer -nargs=1 AsciinemaInsertCommentAtCursor
 command! -buffer -nargs=1 AsciinemaInsertCommentAndMarkerAtCursor
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', [ft#asciinema#insert#CreateMarker(<q-args>), ft#asciinema#insert#CreateComment(<q-args>)])
 
-command! -buffer -nargs=1 AsciinemaInsertTimedCommentAtCursor
-\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment(<q-args>) | echoerr ingo#err#Get() | endif
 command! -buffer -nargs=1 AsciinemaExtendTimedCommentAtCursor
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration')))
+command! -buffer -nargs=1 AsciinemaInsertTimedCommentAtCursor
+\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment(<q-args>) | echoerr ingo#err#Get() | endif
+
+command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaInsertCommentAtPosition
+\   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateComment(<q-args>, ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)))
+command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaExtendTimedCommentAtPosition
+\   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration'), ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)))
 
 
 
