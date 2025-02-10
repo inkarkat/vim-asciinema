@@ -22,6 +22,10 @@ function! s:IsModifiable() abort
     return ! &l:readonly && &l:modifiable
 endfunction
 
+function! ft#asciinema#CreateRelativeRecord( timeDelta, absoluteTime, payload ) abort
+    return printf('[+%s,%11s,%s]', s:RenderTime(a:timeDelta, ' '), s:RenderTime(a:absoluteTime, ' '), a:payload)
+endfunction
+
 function! ft#asciinema#Relativize() abort
     if ! s:IsModifiable()
 	return
@@ -39,7 +43,7 @@ function! ft#asciinema#Relativize() abort
 	    continue
 	endif
 
-	call setline(l:lnum, printf('[+%s,%11s,%s]', s:RenderTime(l:curTime - l:prevTime, ' '), s:RenderTime(l:curTime, ' '), l:parse[3]))
+	call setline(l:lnum, ft#asciinema#CreateRelativeRecord(l:curTime - l:prevTime, l:curTime, l:parse[3]))
 	let l:prevTime = l:curTime
     endfor
 endfunction
