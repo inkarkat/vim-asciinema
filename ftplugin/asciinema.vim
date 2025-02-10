@@ -23,6 +23,9 @@ endif
 if ! exists('g:asciinema_TimedCommentDuration')
     let g:asciinema_TimedCommentDuration = 3
 endif
+if ! exists('g:asciinema_TimedCommentMinDuration')
+    let g:asciinema_TimedCommentMinDuration = 0.9
+endif
 
 if ! exists('g:asciinema_SaveCursorPosition')
     let g:asciinema_SaveCursorPosition = "\e[s"
@@ -41,8 +44,10 @@ command! -buffer -nargs=1 AsciinemaInsertCommentAtCursor
 command! -buffer -nargs=1 AsciinemaInsertCommentAndMarkerAtCursor
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', [ft#asciinema#insert#CreateMarker(<q-args>), ft#asciinema#insert#CreateComment(<q-args>)])
 
+command! -buffer -nargs=1 AsciinemaInsertTimedCommentAtCursor
+\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment(<q-args>) | echoerr ingo#err#Get() | endif
 command! -buffer -nargs=1 AsciinemaExtendTimedCommentAtCursor
-\   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>))
+\   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration')))
 
 
 

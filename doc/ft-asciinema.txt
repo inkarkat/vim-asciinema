@@ -1,4 +1,4 @@
-*asciinema.txt*         Filetype support for asciinema terminal session recordings
+*ft-asciinema.txt*      Filetype support for asciinema terminal session recordings
 
 			 ASCIINEMA    by Ingo Karkat
 							       *asciinema.vim*
@@ -67,6 +67,14 @@ USAGE							     *asciinema-usage*
 			Insert both a marker and comment at the recording's
 			current cursor position, to provide commentary on
 			what's about to happen and allow to navigate to it.
+					*:AsciinemaInsertTimedCommentAtCursor*
+:AsciinemaInsertTimedCommentAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position, and clear it again before the next record
+			happens (but show it no longer than
+			|g:asciinema_TimedCommentMaxDuration|). The delay
+			between the current and the following record is
+			reduced accordingly.
 					*:AsciinemaExtendTimedCommentAtCursor*
 :AsciinemaExtendTimedCommentAtCursor {comment}
 			Insert a comment at the recording's current cursor
@@ -109,6 +117,12 @@ Text that is inserted before / after the passed {comment}; e.g. quotes and/or
 ANSI escape sequences for highlighting.
 					    *g:asciinema_TimedCommentDuration*
 Duration in seconds that a timed comment is shown before it's cleared again.
+					 *g:asciinema_TimedCommentMinDuration*
+Minimum duration in seconds to the next record that
+|:AsciinemaInsertTimedCommentAtCursor| accepts, so that the comment is
+actually readable. Use |:AsciinemaExtendTimedCommentAtCursor| if the next
+record follows too quickly.
+
 
 ==============================================================================
 LIMITATIONS					       *asciinema-limitations*
