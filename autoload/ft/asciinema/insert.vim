@@ -13,8 +13,11 @@ function! ft#asciinema#insert#CreateMarker( label ) abort
 endfunction
 
 function! ft#asciinema#insert#CreateComment( comment ) abort
-    let l:commentOutput = ingo#plugin#setting#GetBufferLocal('asciinema_CommentPrefix') . a:comment . ingo#plugin#setting#GetBufferLocal('asciinema_CommentSuffix')
-    return ft#asciinema#CreateRelativeRecord(0.0, 0.0, printf(' "o", %s', json_encode(s:KeepCursorPosition(l:commentOutput))))
+    return ft#asciinema#CreateRelativeRecord(0.0, 0.0, printf(' "o", %s', json_encode(s:KeepCursorPosition(s:MakeCommentOutput(a:comment)))))
+endfunction
+
+function! s:MakeCommentOutput( comment ) abort
+    return ingo#plugin#setting#GetBufferLocal('asciinema_CommentPrefix') . a:comment . ingo#plugin#setting#GetBufferLocal('asciinema_CommentSuffix')
 endfunction
 
 function! s:KeepCursorPosition( text ) abort
