@@ -27,7 +27,7 @@ function! ft#asciinema#insert#CreateTimedComment( comment, clearDelay, ... ) abo
     \]
 endfunction
 
-function! ft#asciinema#insert#InsertTimedComment( alternativeExtendCommand, comment, ... ) abort
+function! ft#asciinema#insert#InsertTimedComment( isAddMarker, alternativeExtendCommand, comment, ... ) abort
     let l:repositioning = a:0 ? a:1 : ''
     let l:followingLnum = line('.') + 1
     let l:parse = ft#asciinema#ParseRelativizedRecord(l:followingLnum)
@@ -43,7 +43,12 @@ function! ft#asciinema#insert#InsertTimedComment( alternativeExtendCommand, comm
 
     let l:clearDelay = s:Min(l:timeDelta, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration'))
     call setline(l:followingLnum, ft#asciinema#CreateRelativeRecord(l:timeDelta - l:clearDelay, 0.0, l:parse[3]))
-    call ingo#lines#PutWrapper(l:followingLnum, 'put!', ft#asciinema#insert#CreateTimedComment(a:comment, l:clearDelay, l:repositioning))
+
+    let l:lines = ft#asciinema#insert#CreateTimedComment(a:comment, l:clearDelay, l:repositioning)
+    if a:isAddMarker
+	call insert(l:lines, ft#asciinema#insert#CreateMarker(a:comment))
+    endif
+    call ingo#lines#PutWrapper(l:followingLnum, 'put!', l:lines)
     return 1
 endfunction
 

@@ -68,14 +68,18 @@ USAGE							     *asciinema-usage*
 			current cursor position, to provide commentary on
 			what's about to happen and allow to navigate to it.
 					*:AsciinemaExtendTimedCommentAtCursor*
+			       *:AsciinemaExtendTimedCommentAndMarkerAtCursor*
 :AsciinemaExtendTimedCommentAtCursor {comment}
+:AsciinemaExtendTimedCommentAndMarkerAtCursor {comment}
 			Insert a comment at the recording's current cursor
 			position, and clear it again after
 			|g:asciinema_TimedCommentDuration|. Following records
 			are kept untouched, so this increases the overall
 			duration of the recording.
 					*:AsciinemaInsertTimedCommentAtCursor*
+			       *:AsciinemaInsertTimedCommentAndMarkerAtCursor*
 :AsciinemaInsertTimedCommentAtCursor {comment}
+:AsciinemaInsertTimedCommentAndMarkerAtCursor {comment}
 			Insert a comment at the recording's current cursor
 			position, and clear it again before the next record
 			happens (but show it no longer than
@@ -83,7 +87,9 @@ USAGE							     *asciinema-usage*
 			between the current and the following record is
 			reduced accordingly.
 					   *:AsciinemaInsertCommentAtPosition*
+				  *:AsciinemaInsertCommentAndMarkerAtPosition*
 :[{row}[,{col}]]AsciinemaInsertCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaInsertCommentAndMarkerAtPosition {comment}
 			Insert a comment at {row}, {col} (first column if
 			omitted) or |g:asciinema_DefaultPosition| if no
 			address is given. It will appear after the current
@@ -91,7 +97,9 @@ USAGE							     *asciinema-usage*
 			position, so any following records will continue as if
 			it weren't there.
 				      *:AsciinemaExtendTimedCommentAtPosition*
+			     *:AsciinemaExtendTimedCommentAndMarkerAtPosition*
 :[{row}[,{col}]]AsciinemaExtendTimedCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaExtendTimedCommentAndMarkerAtPosition {comment}
 			Insert a comment at {row}, {col} (first column if
 			omitted) or |g:asciinema_DefaultPosition| if no
 			address is given, and clear it again after
@@ -99,7 +107,9 @@ USAGE							     *asciinema-usage*
 			are kept untouched, so this increases the overall
 			duration of the recording.
 				      *:AsciinemaInsertTimedCommentAtPosition*
+			     *:AsciinemaInsertTimedCommentAndMarkerAtPosition*
 :[{row}[,{col}]]AsciinemaInsertTimedCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaInsertTimedCommentAndMarkerAtPosition {comment}
 			Insert a comment at {row}, {col} (first column if
 			omitted) or |g:asciinema_DefaultPosition| if no
 			address is given, and clear it again before the next
