@@ -53,12 +53,14 @@ command! -buffer -nargs=1 AsciinemaInsertCommentAndMarkerAtCursor
 command! -buffer -nargs=1 AsciinemaExtendTimedCommentAtCursor
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration')))
 command! -buffer -nargs=1 AsciinemaInsertTimedCommentAtCursor
-\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment(<q-args>) | echoerr ingo#err#Get() | endif
+\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment('AsciinemaExtendTimedCommentAtCursor', <q-args>) | echoerr ingo#err#Get() | endif
 
 command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaInsertCommentAtPosition
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateComment(<q-args>, ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)))
 command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaExtendTimedCommentAtPosition
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put', ft#asciinema#insert#CreateTimedComment(<q-args>, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration'), ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)))
+command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaInsertTimedCommentAtPosition
+\   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment('AsciinemaExtendTimedCommentAtPosition', <q-args>, ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)) | echoerr ingo#err#Get() | endif
 
 
 

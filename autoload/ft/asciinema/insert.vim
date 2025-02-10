@@ -27,7 +27,8 @@ function! ft#asciinema#insert#CreateTimedComment( comment, clearDelay, ... ) abo
     \]
 endfunction
 
-function! ft#asciinema#insert#InsertTimedComment( comment ) abort
+function! ft#asciinema#insert#InsertTimedComment( alternativeExtendCommand, comment, ... ) abort
+    let l:repositioning = a:0 ? a:1 : ''
     let l:followingLnum = line('.') + 1
     let l:parse = ft#asciinema#ParseRelativizedRecord(l:followingLnum)
     if empty(l:parse)
@@ -36,13 +37,13 @@ function! ft#asciinema#insert#InsertTimedComment( comment ) abort
     endif
     let l:timeDelta = str2float(l:parse[1])
     if l:timeDelta < ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentMinDuration')
-	call ingo#err#Set(printf('Following record is too close; use :%s instead.', 'AsciinemaExtendTimedCommentAtCursor'))
+	call ingo#err#Set(printf('Following record is too close; use :%s instead.', a:alternativeExtendCommand))
 	return 0
     endif
 
     let l:clearDelay = s:Min(l:timeDelta, ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentDuration'))
     call setline(l:followingLnum, ft#asciinema#CreateRelativeRecord(l:timeDelta - l:clearDelay, 0.0, l:parse[3]))
-    call ingo#lines#PutWrapper(l:followingLnum, 'put!', ft#asciinema#insert#CreateTimedComment(a:comment, l:clearDelay))
+    call ingo#lines#PutWrapper(l:followingLnum, 'put!', ft#asciinema#insert#CreateTimedComment(a:comment, l:clearDelay, l:repositioning))
     return 1
 endfunction
 

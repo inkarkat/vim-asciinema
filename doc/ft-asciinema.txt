@@ -98,6 +98,15 @@ USAGE							     *asciinema-usage*
 			|g:asciinema_TimedCommentDuration|. Following records
 			are kept untouched, so this increases the overall
 			duration of the recording.
+				      *:AsciinemaInsertTimedCommentAtPosition*
+:[{row}[,{col}]]AsciinemaInsertTimedCommentAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given, and clear it again before the next
+			record happens (but show it no longer than
+			|g:asciinema_TimedCommentMaxDuration|). The delay
+			between the current and the following record is
+			reduced accordingly.
 
 EXAMPLE							   *asciinema-example*
 
@@ -135,9 +144,9 @@ ANSI escape sequences for highlighting.
 Duration in seconds that a timed comment is shown before it's cleared again.
 					 *g:asciinema_TimedCommentMinDuration*
 Minimum duration in seconds to the next record that
-|:AsciinemaInsertTimedCommentAtCursor| accepts, so that the comment is
-actually readable. Use |:AsciinemaExtendTimedCommentAtCursor| if the next
-record follows too quickly.
+|:AsciinemaInsertTimedCommentAtCursor| et al. accept, so that the comment is
+actually readable. Use |:AsciinemaExtendTimedCommentAtCursor| et al. if the
+next record follows too quickly.
 			*g:asciinema_DefaultPosition*
 The default row, col for the |:AsciinemaInsertCommentAtPosition| commands; the
 default is the terminal's upper left corner: >
