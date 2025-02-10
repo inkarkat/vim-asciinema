@@ -67,6 +67,13 @@ USAGE							     *asciinema-usage*
 			Insert both a marker and comment at the recording's
 			current cursor position, to provide commentary on
 			what's about to happen and allow to navigate to it.
+					*:AsciinemaExtendTimedCommentAtCursor*
+:AsciinemaExtendTimedCommentAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position, and clear it again after
+			|g:asciinema_TimedCommentDuration|. Following records
+			are kept untouched, so this increases the overall
+			duration of the recording.
 
 EXAMPLE							   *asciinema-example*
 
@@ -100,6 +107,8 @@ For a permanent configuration, put the following commands into your |vimrc|:
 		       *g:asciinema_CommentPrefix* *g:asciinema_CommentSuffix*
 Text that is inserted before / after the passed {comment}; e.g. quotes and/or
 ANSI escape sequences for highlighting.
+					    *g:asciinema_TimedCommentDuration*
+Duration in seconds that a timed comment is shown before it's cleared again.
 
 ==============================================================================
 LIMITATIONS					       *asciinema-limitations*
