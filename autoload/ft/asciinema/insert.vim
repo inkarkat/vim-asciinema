@@ -32,12 +32,12 @@ function! ft#asciinema#insert#InsertTimedComment( isAddMarker, alternativeExtend
     let l:followingLnum = line('.') + 1
     let l:parse = ft#asciinema#ParseRelativizedRecord(l:followingLnum)
     if empty(l:parse)
-	call ingo#err#Set('No following record found')
+	call ingo#err#Set('No following frame found')
 	return 0
     endif
     let l:timeDelta = str2float(l:parse[1])
     if l:timeDelta < ingo#plugin#setting#GetBufferLocal('asciinema_TimedCommentMinDuration')
-	call ingo#err#Set(printf('Following record is too close; use :%s instead.', a:alternativeExtendCommand))
+	call ingo#err#Set(printf('Following frame is too close; use :%s instead.', a:alternativeExtendCommand))
 	return 0
     endif
 

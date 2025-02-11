@@ -26,7 +26,7 @@ absolute time when writing the buffer:
 [+0.080186,   2.756698, "o", "c"]
 ```
 By editing the relative offset, durations can be shortened or prolonged
-easily. If you want the adaptation to stop at a certain record, simply remove
+easily. If you want the adaptation to stop at a certain frame, simply remove
 the added first column; the absolute timestamp will be used (if necessary
 increased to avoid a jump back into the past).
 
@@ -46,11 +46,11 @@ USAGE
                             Insert a specific point on a recording's timeline,
                             which can be used for navigation within the recording
                             or to automate the player. It's inserted after the
-                            current record and appears at the same time.
+                            current frame and appears at the same time.
 
     :AsciinemaInsertCommentAtCursor {comment}
                             Insert a comment at the recording's current cursor
-                            position. It will appear after the current record and
+                            position. It will appear after the current frame and
                             does not modify the cursor position, so any following
                             records will overwrite it (unless they jump
                             elsewhere).
@@ -71,10 +71,10 @@ USAGE
     :AsciinemaInsertTimedCommentAtCursor {comment}
     :AsciinemaInsertTimedCommentAndMarkerAtCursor {comment}
                             Insert a comment at the recording's current cursor
-                            position, and clear it again before the next record
+                            position, and clear it again before the next frame
                             happens (but show it no longer than
                             g:asciinema_TimedCommentDuration). The delay between
-                            the current and the following record is reduced
+                            the current and the following frame is reduced
                             accordingly.
 
     :[{row}[,{col}]]AsciinemaInsertCommentAtPosition {comment}
@@ -82,7 +82,7 @@ USAGE
                             Insert a comment at {row}, {col} (first column if
                             omitted) or g:asciinema_DefaultPosition if no
                             address is given. It will appear after the current
-                            record and does not permanently change the cursor
+                            frame and does not permanently change the cursor
                             position, so any following records will continue as if
                             it weren't there.
 
@@ -100,9 +100,9 @@ USAGE
                             Insert a comment at {row}, {col} (first column if
                             omitted) or g:asciinema_DefaultPosition if no
                             address is given, and clear it again before the next
-                            record happens (but show it no longer than
+                            frame happens (but show it no longer than
                             g:asciinema_TimedCommentDuration). The delay
-                            between the current and the following record is
+                            between the current and the following frame is
                             reduced accordingly.
 
 INSTALLATION
@@ -141,10 +141,10 @@ ANSI escape sequences for highlighting.
 
 Duration in seconds that a timed comment is shown before it's cleared again.
 
-Minimum duration in seconds to the next record that
+Minimum duration in seconds to the next frame that
 :AsciinemaInsertTimedCommentAtCursor et al. accept, so that the comment is
 actually readable. Use :AsciinemaExtendTimedCommentAtCursor et al. if the
-next record follows too quickly.
+next frame follows too quickly.
 
 The default row, col for the :AsciinemaInsertCommentAtPosition commands; the
 default is the terminal's upper left corner:
