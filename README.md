@@ -18,17 +18,17 @@ recordings cannot simply be concatenated.
 [2.756698, "o", "c"]
 ```
 This plugin facilitates manual edits by adding a new first column with a +0.42
-relative offset, which then takes precedence over the following original
-absolute time when writing the buffer:
+relative time difference, which then takes precedence over the following
+original absolute time when writing the buffer:
 ```
 [+2.56533 ,   2.56533 , "o", "a"]
 [+0.111182,   2.676512, "o", "b"]
 [+0.080186,   2.756698, "o", "c"]
 ```
-By editing the relative offset, durations can be shortened or prolonged
-easily. If you want the adaptation to stop at a certain frame, simply remove
-the added first column; the absolute timestamp will be used (if necessary
-increased to avoid a jump back into the past).
+By editing the delta, durations can be shortened or prolonged easily. If you
+want the adaptation to stop at a certain frame, simply remove the added first
+column; the absolute timestamp will be used (if necessary increased to avoid a
+jump back into the past).
 
 ### RELATED WORKS
 

@@ -14,10 +14,10 @@ syntax match asciinemaMeta "\%1l^{.*}" contains=@asciinemaJson
 syntax match asciinemaMarker '^\[\%(+[^,]\+,\s*\)\?[^,]\+,\s*"m",\s*.*\]$' contains=asciinemaOpenBracket,asciinemaCloseQuoteAndBracket
 syntax match asciinemaOutput '^\[\%(+[^,]\+,\s*\)\?[^,]\+,\s*"o",\s*.*\]$' contains=asciinemaOpenBracket,asciinemaCloseQuoteAndBracket,asciinemaAnsiEscape,asciinemaSpecial
 
-syntax match asciinemaOpenBracket "^\[" contained skipwhite nextgroup=asciinemaSmallTimeOffset,asciinemaLargeTimeOffset,asciinemaTimestamp
-syntax match asciinemaSmallTimeOffset "+0\%(\.\d*\)\?" contained skipwhite nextgroup=asciinemaTimeOffsetComma
-syntax match asciinemaLargeTimeOffset "+[1-9]\d*\%(\.\d*\)\?" contained skipwhite nextgroup=asciinemaTimeOffsetComma
-syntax match asciinemaTimeOffsetComma "," contained skipwhite nextgroup=asciinemaTimestamp
+syntax match asciinemaOpenBracket "^\[" contained skipwhite nextgroup=asciinemaSmallTimeDelta,asciinemaLargeTimeDelta,asciinemaTimestamp
+syntax match asciinemaSmallTimeDelta "+0\%(\.\d*\)\?" contained skipwhite nextgroup=asciinemaTimeDeltaComma
+syntax match asciinemaLargeTimeDelta "+[1-9]\d*\%(\.\d*\)\?" contained skipwhite nextgroup=asciinemaTimeDeltaComma
+syntax match asciinemaTimeDeltaComma "," contained skipwhite nextgroup=asciinemaTimestamp
 syntax match asciinemaTimestamp "\d\+\%(\.\d*\)\?" contained skipwhite nextgroup=asciinemaType
 syntax match asciinemaType ',\s*"\l",' contained skipwhite nextgroup=asciinemaOpenQuote
 syntax match asciinemaOpenQuote '"'
@@ -41,8 +41,8 @@ highlight def link asciinemaOpenQuote NonText
 highlight def link asciinemaCloseQuoteAndBracket NonText
 highlight def link asciinemaMarker Label
 highlight def link asciinemaTimestamp Number
-highlight def link asciinemaSmallTimeOffset Constant
-highlight def link asciinemaLargeTimeOffset Type
+highlight def link asciinemaSmallTimeDelta Constant
+highlight def link asciinemaLargeTimeDelta Type
 highlight def link asciinemaEscape SpecialKey
 highlight def link asciinemaEscapeConceal1 asciinemaEscape
 highlight def link asciinemaEscapeConceal2 asciinemaEscape
