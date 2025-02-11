@@ -30,14 +30,14 @@ easily. If you want the adaptation to stop at a certain record, simply remove
 the added first column; the absolute timestamp will be used (if necessary
 increased to avoid a jump back into the past).
 
-### SOURCE
-(Original Vim tip, Stack Overflow answer, ...)
-
-### SEE ALSO
-(Plugins offering complementary functionality, or plugins using this library.)
-
 ### RELATED WORKS
-(Alternatives from other authors, other approaches, references not used here.)
+
+- https://github.com/hydrargyrum/asciinema-comment is a Python tool that wraps
+  the screencast in a screen session to add one reserved blank line, and then
+  inserts comments from a subtitles file.
+- https://github.com/jdum/asciinema-scene is a Python tool to copy / cut /
+  merge / quantize screencasts and edit frames, but it has no dedicated support
+  for comments.
 
 USAGE
 ------------------------------------------------------------------------------
