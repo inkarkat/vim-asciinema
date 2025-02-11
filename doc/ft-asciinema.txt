@@ -1,4 +1,4 @@
-*asciinema.txt*         Filetype support for asciinema terminal session recordings
+*ft-asciinema.txt*      Filetype support for asciinema terminal session recordings
 
 			 ASCIINEMA    by Ingo Karkat
 							       *asciinema.vim*
@@ -49,6 +49,75 @@ RELATED WORKS								     *
 ==============================================================================
 USAGE							     *asciinema-usage*
 
+						      *:AsciinemaInsertMarker*
+:AsciinemaInsertMarker [{label}]
+			Insert a specific point on a recording's timeline,
+			which can be used for navigation within the recording
+			or to automate the player. It's inserted after the
+			current record and appears at the same time.
+					     *:AsciinemaInsertCommentAtCursor*
+:AsciinemaInsertCommentAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position. It will appear after the current record and
+			does not modify the cursor position, so any following
+			records will overwrite it (unless they jump
+			elsewhere).
+				    *:AsciinemaInsertCommentAndMarkerAtCursor*
+:AsciinemaInsertCommentAndMarkerAtCursor {comment}
+			Insert both a marker and comment at the recording's
+			current cursor position, to provide commentary on
+			what's about to happen and allow to navigate to it.
+					*:AsciinemaExtendTimedCommentAtCursor*
+			       *:AsciinemaExtendTimedCommentAndMarkerAtCursor*
+:AsciinemaExtendTimedCommentAtCursor {comment}
+:AsciinemaExtendTimedCommentAndMarkerAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position, and clear it again after
+			|g:asciinema_TimedCommentDuration|. Following records
+			are kept untouched, so this increases the overall
+			duration of the recording.
+					*:AsciinemaInsertTimedCommentAtCursor*
+			       *:AsciinemaInsertTimedCommentAndMarkerAtCursor*
+:AsciinemaInsertTimedCommentAtCursor {comment}
+:AsciinemaInsertTimedCommentAndMarkerAtCursor {comment}
+			Insert a comment at the recording's current cursor
+			position, and clear it again before the next record
+			happens (but show it no longer than
+			|g:asciinema_TimedCommentDuration|). The delay between
+			the current and the following record is reduced
+			accordingly.
+					   *:AsciinemaInsertCommentAtPosition*
+				  *:AsciinemaInsertCommentAndMarkerAtPosition*
+:[{row}[,{col}]]AsciinemaInsertCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaInsertCommentAndMarkerAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given. It will appear after the current
+			record and does not permanently change the cursor
+			position, so any following records will continue as if
+			it weren't there.
+				      *:AsciinemaExtendTimedCommentAtPosition*
+			     *:AsciinemaExtendTimedCommentAndMarkerAtPosition*
+:[{row}[,{col}]]AsciinemaExtendTimedCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaExtendTimedCommentAndMarkerAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given, and clear it again after
+			|g:asciinema_TimedCommentDuration|. Following records
+			are kept untouched, so this increases the overall
+			duration of the recording.
+				      *:AsciinemaInsertTimedCommentAtPosition*
+			     *:AsciinemaInsertTimedCommentAndMarkerAtPosition*
+:[{row}[,{col}]]AsciinemaInsertTimedCommentAtPosition {comment}
+:[{row}[,{col}]]AsciinemaInsertTimedCommentAndMarkerAtPosition {comment}
+			Insert a comment at {row}, {col} (first column if
+			omitted) or |g:asciinema_DefaultPosition| if no
+			address is given, and clear it again before the next
+			record happens (but show it no longer than
+			|g:asciinema_TimedCommentDuration|). The delay
+			between the current and the following record is
+			reduced accordingly.
+
 EXAMPLE							   *asciinema-example*
 
 ==============================================================================
@@ -71,13 +140,29 @@ To uninstall, use the |:RmVimball| command.
 DEPENDENCIES					      *asciinema-dependencies*
 
 - Requires Vim 7.2 or higher with |+float| support.
+- Requires Vim 8.1.560 or higher for the :Asciinema*AtPosition commands.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.046 or
+  higher.
 
 ==============================================================================
 CONFIGURATION					     *asciinema-configuration*
 
 For a permanent configuration, put the following commands into your |vimrc|:
-configvar
-
+		       *g:asciinema_CommentPrefix* *g:asciinema_CommentSuffix*
+Text that is inserted before / after the passed {comment}; e.g. quotes and/or
+ANSI escape sequences for highlighting.
+					    *g:asciinema_TimedCommentDuration*
+Duration in seconds that a timed comment is shown before it's cleared again.
+					 *g:asciinema_TimedCommentMinDuration*
+Minimum duration in seconds to the next record that
+|:AsciinemaInsertTimedCommentAtCursor| et al. accept, so that the comment is
+actually readable. Use |:AsciinemaExtendTimedCommentAtCursor| et al. if the
+next record follows too quickly.
+						 *g:asciinema_DefaultPosition*
+The default row, col for the |:AsciinemaInsertCommentAtPosition| commands; the
+default is the terminal's upper left corner: >
+    let g:asciinema_DefaultPosition = [1, 1]
+<
 ==============================================================================
 LIMITATIONS					       *asciinema-limitations*
 
