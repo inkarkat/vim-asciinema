@@ -76,6 +76,7 @@ command! -buffer -nargs=1 AsciinemaInsertTimedCommentAndMarkerAtCursor
 \       'AsciinemaExtendTimedCommentAndMarkerAtCursor',
 \       <q-args>) | echoerr ingo#err#Get() | endif
 
+if (v:version == 801 && has('patch560') || v:version > 801)
 command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaInsertCommentAtPosition
 \   call setline('.', getline('.')) | call ingo#lines#PutWrapper('.', 'put',
 \       ft#asciinema#insert#CreateComment(<q-args>, ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>))
@@ -106,6 +107,7 @@ command! -buffer -range=-1 -addr=other -nargs=1 AsciinemaInsertTimedCommentAndMa
 \   call setline('.', getline('.')) | if ! ft#asciinema#insert#InsertTimedComment(1,
 \       'AsciinemaExtendTimedCommentAndMarkerAtPosition',
 \       <q-args>, ft#asciinema#insert#Repositioning(<count>, <line1>, <line2>)) | echoerr ingo#err#Get() | endif
+endif
 
 
 
