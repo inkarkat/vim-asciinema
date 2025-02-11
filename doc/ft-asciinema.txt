@@ -1,4 +1,4 @@
-*ft-asciinema.txt*      Filetype support for asciinema terminal session recordings
+*ft-asciinema.txt*      Filetype support for asciinema terminal session recordings.
 
 			 ASCIINEMA    by Ingo Karkat
 							       *asciinema.vim*
